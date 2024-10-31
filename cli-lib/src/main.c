@@ -19,12 +19,10 @@ void printHello(int nextX, int nextY)
     screenGotoxy(x, y);
     printf("Hello World");
 
-    // Display score
-    screenGotoxy(0, 0); // Ajuste a posição conforme necessário
+    screenGotoxy(0, 0);
     printf("Score: %d", score);
 }
 
-// Função para salvar o score em um arquivo
 void saveScore() {
     FILE *file = fopen("score.txt", "w");
     if (file != NULL) {
@@ -35,14 +33,13 @@ void saveScore() {
     }
 }
 
-// Função para carregar o score de um arquivo
 void loadScore() {
     FILE *file = fopen("score.txt", "r");
     if (file != NULL) {
         fscanf(file, "%d", &score);
         fclose(file);
     } else {
-        score = 0; // Comece do zero se o arquivo não existir
+        score = 0;
     }
 }
 
@@ -54,20 +51,19 @@ int main()
     keyboardInit();
     timerInit(50);
     
-    loadScore(); // Carregar pontuação salva
+    loadScore(); 
 
     printHello(x, y);
     screenUpdate();
 
-    while (ch != 10) // enter
+    while (ch != 10)
     {
         if (keyhit()) 
         {
             ch = readch();
-            // Substituição de printKey por printf para exibir o código da tecla
             screenSetColor(YELLOW, DARKGRAY);
             screenGotoxy(35, 22);
-            printf("Key code : %d ", ch); // Exibe o código da tecla pressionada
+            printf("Key code : %d ", ch);
             screenUpdate();
         }
 
@@ -76,13 +72,13 @@ int main()
             int newX = x + incX;
             if (newX >= (MAXX - strlen("Hello World") - 1) || newX <= MINX + 1) {
                 incX = -incX;
-                score++; // Incrementar pontuação na colisão
+                score++; 
             }
 
             int newY = y + incY;
             if (newY >= MAXY - 1 || newY <= MINY + 1) {
                 incY = -incY;
-                score++; // Incrementar pontuação na colisão
+                score++;
             }
 
             printHello(newX, newY);
@@ -90,7 +86,7 @@ int main()
         }
     }
 
-    saveScore(); // Salvar pontuação ao sair
+    saveScore();
     keyboardDestroy();
     screenDestroy();
     timerDestroy();
