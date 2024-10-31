@@ -24,6 +24,7 @@ void printHello(int nextX, int nextY)
     printf("Score: %d", score);
 }
 
+// Função para salvar o score em um arquivo
 void saveScore() {
     FILE *file = fopen("score.txt", "w");
     if (file != NULL) {
@@ -34,6 +35,7 @@ void saveScore() {
     }
 }
 
+// Função para carregar o score de um arquivo
 void loadScore() {
     FILE *file = fopen("score.txt", "r");
     if (file != NULL) {
@@ -57,12 +59,15 @@ int main()
     printHello(x, y);
     screenUpdate();
 
-    while (ch != 10) //enter
+    while (ch != 10) // enter
     {
         if (keyhit()) 
         {
             ch = readch();
-            printKey(ch);
+            // Substituição de printKey por printf para exibir o código da tecla
+            screenSetColor(YELLOW, DARKGRAY);
+            screenGotoxy(35, 22);
+            printf("Key code : %d ", ch); // Exibe o código da tecla pressionada
             screenUpdate();
         }
 
@@ -80,7 +85,6 @@ int main()
                 score++; // Incrementar pontuação na colisão
             }
 
-            printKey(ch);
             printHello(newX, newY);
             screenUpdate();
         }
